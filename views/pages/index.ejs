@@ -1,55 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Create User</title>
-  </head>
-  <body class="d-flex">
-    <div>
-      <h3>All User List</h1>
-      <ul>
-        <% if (allUser && allUser.length) { %>
-          <% allUser.forEach(user => { %>
-            <li><%= user.firstName %> - <%= user.email %></li>
-          <% }) %>
-        <% } else { %>
-          <li>No users found.</li>
-        <% } %>
-      </ul>
-    </div>
-    <div class="card my-4 mx-4" style="width: 18rem">
-        <h3 class="mx-3 mt-3">Add New User</h3>
-      <form class="card-body" action="/users" method="POST">
-        <div>
-          <label class="form-label" for="first_name">First Name:</label>
-          <input class="form-control" type="text" id="first_name" name="first_name" required />
-        </div>
-        <div>
-          <label class="form-label" for="last_name">Last Name:</label>
-          <input class="form-control" type="text" id="last_name" name="last_name" required />
-        </div>
-        <div>
-          <label class="form-label" for="email">Email:</label>
-          <input class="form-control" type="email" id="email" name="email" required />
-        </div>
-        <div>
-          <label class="form-label" for="gender">Gender:</label>
-          <select class="form-select" id="gender" name="gender" required>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <button class="btn btn-primary mt-4" type="submit">Create User</button>
-      </form>
-    </div>
+</head>
 
+<body>
+    <div style="max-width: 38rem;">
+        <h3>All User List</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (allUser && allUser.length) { %>
+                        <% allUser.forEach(user=> { %>
+                            <tr>
+                                <td>
+                                    <%= user.firstName %>
+                                </td>
+                                <td>
+                                    <%= user.email %>
+                                </td>
+                                <td>
+                                    <button data-bs-toggle="modal" data-bs-target="#addUserModal"
+                                        class="bg-transparent border-0">
+                                        <i class="fa-solid fa-plus p-2"></i>
+                                    </button>
+                                    <a href="#" class="text-decoration-none"><i
+                                            class="fa-solid fa-pen-to-square p-2 text-info"></i></a>
+                                    <a href="#" class="text-decoration-none"><i
+                                            class="fa-solid fa-trash-can p-2 text-danger"></i></a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="2">No users found.</td>
+                                    </tr>
+                                    <% } %>
+                </tbody>
+            </table>
+    </div>
+    <!-- Bootstrap 5 Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form action="/users" method="POST">
+                        <!-- First Name Input -->
+                        <div class="mb-3">
+                            <label for="first_name" class="form-label">First Name:</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        </div>
+                        <!-- Last Name Input -->
+                        <div class="mb-3">
+                            <label for="last_name" class="form-label">Last Name:</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required>
+                        </div>
+                        <!-- Email Input -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <!-- Gender Select -->
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Gender:</label>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Create User</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-  </body>
+</body>
+
 </html>
