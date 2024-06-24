@@ -1,15 +1,16 @@
 const User = require("../models/user");
 
+// get all users list
 async function handleGetAllUsers(req, res) {
-  const allUser = await User.find({});
-  const html = `<ul>
-          ${allUser
-            .map((user) => `<li>${user?.firstName} - ${user?.email})</li>`)
-            .join("")}
-            </ul>`;
-  return res.send(html);
+  try {
+    const allUser = await User.find({});
+    return res.render('pages/index', { allUser });
+  } catch (error) {
+    return res.status(500).send('Internal Server Error');
+  }
 }
 
+// get a single user
 async function handleGetSingleUser(req, res) {
   const user = await User.findById(req.params.id);
   if (!user) {
@@ -18,6 +19,7 @@ async function handleGetSingleUser(req, res) {
   return res.json(user);
 }
 
+// new user add
 async function handleAddUser(req, res) {
   const body = req.body;
   const result = await User.create({
@@ -26,14 +28,17 @@ async function handleAddUser(req, res) {
     email: body.email,
     gender: body.gender,
   });
-  return res.json(result);
+  res.render("pages/index", { result: result });
+  res.redirect("/users");
 }
 
+// delete users
 async function handleDeleteUser(req, res) {
   const user = await User.findByIdAndDelete(req.params.id);
   return res.json({ status: "success" });
 }
 
+// update users
 async function handleUpdateUser(req, res) {
   const body = req.body;
   await User.findByIdAndUpdate(req.params.id, {
