@@ -13,16 +13,16 @@ const router = express.Router();
 // get all users
 router.get("/", handleGetAllUsers);
 
-// get single user
-router.get("/:id", handleGetSingleUser);
-
 // add a user
 router.post("/", handleAddUser);
 
+// get single user
+router.get("/:id", handleGetSingleUser);
+
 // delete a user
-router.delete("/:id", handleDeleteUser);
+router.delete("/delete", handleDeleteUser);
 
 // update a user
-router.patch("/:id", handleUpdateUser);
+router.patch("/", handleUpdateUser);
 
 module.exports = router;

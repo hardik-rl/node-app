@@ -1,5 +1,16 @@
 const User = require("../models/user");
 
+// delete users
+async function handleDeleteUser(req, res) {
+  const user = await User.findByIdAndDelete(req.params.id);
+  console.log(user, "user delete");
+  res.render("pages/delete", { user: user });
+  res.redirect("/delete");
+  // return res.json({ status: "success" });
+  // res.status(200).send({ redirect: '/users' });
+}
+
+
 // get all users list
 async function handleGetAllUsers(req, res) {
   try {
@@ -30,12 +41,6 @@ async function handleAddUser(req, res) {
   });
   res.render("pages/index", { result: result });
   res.redirect("/users");
-}
-
-// delete users
-async function handleDeleteUser(req, res) {
-  const user = await User.findByIdAndDelete(req.params.id);
-  return res.json({ status: "success" });
 }
 
 // update users
