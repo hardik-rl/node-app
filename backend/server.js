@@ -17,4 +17,4 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/users", userRouter);
 
 // application port
-app.listen(3000, () => console.log("hello"));
+app.listen(5000, () => console.log("hello"));
