@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CommonTable from "../Table";
+import CommonTable from "../../shared/component/Table";
 import { getAllUsers } from "./api";
 import Button from "react-bootstrap/esm/Button";
 
