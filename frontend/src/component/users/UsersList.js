@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import CommonTable from "../../shared/component/Table";
 import { getAllUsers } from "./api";
 import Button from "react-bootstrap/esm/Button";
+import { useNavigate } from "react-router";
 
 const UsersList = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllUsers()
@@ -18,8 +20,12 @@ const UsersList = () => {
   return (
     <>
       <div className="text-end">
-        <Button className="mb-4 ml-auto" variant="primary">
-           Add User
+        <Button
+          onClick={() => navigate("/add")}
+          className="mb-4 ml-auto"
+          variant="primary"
+        >
+          Add User
         </Button>
       </div>
       <div className="overflow-x-auto">
