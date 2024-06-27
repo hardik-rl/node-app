@@ -14,8 +14,8 @@ async function handleDeleteUser(req, res) {
 // get all users list
 async function handleGetAllUsers(req, res) {
   try {
-    const allUser = await User.find({});
-    return res.render('pages/index', { allUser });
+    const users = await User.find({});
+    res.status(200).json(users);
   } catch (error) {
     return res.status(500).send('Internal Server Error');
   }
