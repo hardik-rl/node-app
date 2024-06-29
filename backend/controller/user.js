@@ -32,15 +32,24 @@ async function handleGetSingleUser(req, res) {
 
 // new user add
 async function handleAddUser(req, res) {
-  const body = req.body;
-  const result = await User.create({
-    firstName: body.first_name,
-    lastName: body.last_name,
-    email: body.email,
-    gender: body.gender,
-  });
-  res.render("pages/index", { result: result });
-  res.redirect("/users");
+  try {
+    const { firstName, lastName, email, gender } = req.body;
+    // Validate input
+    if (!firstName || !lastName || !email || !gender) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+    // Check for existing user
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ error: "Email already in use" });
+    }
+    // Create new user
+    const newUser = await User.create({ firstName, lastName, email, gender });
+    return res.status(200).json(newUser);
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 // update users
